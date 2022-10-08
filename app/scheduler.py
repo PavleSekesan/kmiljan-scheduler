@@ -27,7 +27,9 @@ class Scheduler:
             if(idx < n-1):
                 if(schedule[i]["day"] == schedule[i+1]["day"]):
                     if(classroom_group(schedule[i]) != classroom_group(schedule[i+1])):
-                        if(schedule[i+1]["start"] - schedule[i]["end"] < 1):
+                        if(schedule[i]["start"] - schedule[i+1]["end"] < 1):
+                            #print(schedule[i+1], schedule[i])
+                            #print()
                             return False
         
         return True
