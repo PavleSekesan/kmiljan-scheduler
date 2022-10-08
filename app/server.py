@@ -40,7 +40,7 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/picker/<regex("[imnvrl]"):smer>/<regex("[01]{4}"):code>')
+@app.route('/picker/<regex("[imnvrl]"):smer>/<regex("[01]{4,}"):code>')
 def picker(smer, code):
     logger.log_request(request)
     years = decode_years(code)
@@ -59,7 +59,9 @@ def picker(smer, code):
 
 @app.route('/api/scheduler/<regex("[imnvrl]"):smer>', methods=["POST"])
 def schedule(smer):
-    picked_dict = request.get_json(force=True)
+    request_data = request.get_json(force=True)
+    allow_changing_locations = request_data["allow_changing_locations"]
+    picked_dict = request_data["courses"]
     picked = []
     # pprint(picked_dict)
     for course, ctypes in picked_dict.items():
@@ -76,7 +78,7 @@ def schedule(smer):
         ]
     # remove empty classes
     picked = [x for x in picked if len(x[2])]
-    scheduler = Scheduler(picked)
+    scheduler = Scheduler(picked, allow_changing_locations)
     res = scheduler.find()
     #print(f"found {len(res)} possible schedules")
     return {"schedules": res[:max_response_size]}

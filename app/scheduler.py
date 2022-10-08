@@ -7,11 +7,12 @@ import numpy as np
 
 
 class Scheduler:
-    def __init__(self, courses):
+    def __init__(self, courses, allow_changing_locations = False):
         self.bitmap = np.zeros(shape=(5, 13))
         self.placed = set([])
         self.courses = courses
         self.schedules = []
+        self.allow_changing_locations = allow_changing_locations
 
     def schedule_filter(self,schedule):
         n = len(schedule)
@@ -27,7 +28,7 @@ class Scheduler:
             if(idx < n-1):
                 if(schedule[i]["day"] == schedule[i+1]["day"]):
                     if(classroom_group(schedule[i]) != classroom_group(schedule[i+1])):
-                        if(schedule[i]["start"] - schedule[i+1]["end"] < 1):
+                        if not self.allow_changing_locations or (schedule[i]["start"] - schedule[i+1]["end"] < 1):
                             #print(schedule[i+1], schedule[i])
                             #print()
                             return False

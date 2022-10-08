@@ -35,9 +35,10 @@ $(document).ready(function(){
     });
 
     function generateCode(cbs){
-        let code = [0, 0, 0, 0];
-        for(let i = 0; i < 4; i++){
-            code[i] = cbs[i].checked ? 1 : 0 
+        let code = [];
+        let i=0;
+        for(let cb of cbs){
+            code[i++] = cb.checked ? 1 : 0 
         }
         return code.join("");
     }

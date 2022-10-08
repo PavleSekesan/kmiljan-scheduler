@@ -33,9 +33,16 @@ $(document).ready(function(){
         })
         console.log(picked)
 
+        const payload = {
+            courses: picked,
+            allow_changing_locations: window.location.href.slice(-5)[4] == "1" ? true: false
+        }
+
+        console.log(payload);
+
         fetch(`/api/scheduler/${smer}`, {
             method: 'POST',
-            body: JSON.stringify(picked),
+            body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json'
             }
