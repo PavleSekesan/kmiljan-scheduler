@@ -40,7 +40,7 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/picker/<regex("[imnvrl]"):smer>/<regex("[01]{4,}"):code>')
+@app.route('/picker/<regex("[imnvrl]"):smer>/<regex("[01]{5}"):code>')
 def picker(smer, code):
     logger.log_request(request)
     years = decode_years(code)
