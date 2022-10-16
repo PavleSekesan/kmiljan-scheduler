@@ -30,12 +30,10 @@ class DataServer:
 
     def update(self):
         print("Updating database...")
-        self.all_courses = (
-            download_courses()
-        )  # pickle.load(open('pickles/courses.p', 'rb'))
+        self.all_courses = download_courses()
         self.all_modules = download_modules(
             self.all_courses
-        )  # pickle.load(open('pickles/modules.p', 'rb'))
+        )
 
         # MINI IZMENE
         if len(self.all_courses) == 0:
