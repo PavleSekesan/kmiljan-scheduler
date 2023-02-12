@@ -63,11 +63,11 @@ def get_course(td, weekday, time, classroom):
         course_type = "practicum"
 
     description = re.search(
-        r"(?<=\>)[-a-zA-Z\u0400-\u04FF]+(\s[-a-zA-Z\u0400-\u04FF]+)*(\ \d[a-zA-Z\u0400-\u04FF]?)?",
+        r"(?<=\>)[-\u0040-\u0180]+(\s[-\u0040-\u0180]+)*(\ \d[\u0040-\u0180]?)?",
         lines[0],
     ).group(0)
     groups = list(
-        set(re.findall(r"\d[a-zA-Z\u0400-\u04FF]+\d?[a-zA-Z\u0400-\u04FF]?", lines[1]))
+        set(re.findall(r"\d[\u0040-\u0180]+\d?[\u0040-\u0180]?", lines[1]))
     )
     teacher = re.search(r"^(.*)?<", lines[-1]).group(0)[:-1]
     # subgroups = re.findall(r'(\u0413\u0420\d)', lines[2])
