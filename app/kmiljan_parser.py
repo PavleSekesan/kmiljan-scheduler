@@ -5,7 +5,7 @@ import requests as req
 from bs4 import BeautifulSoup
 from transliterate import translit
 
-base_link = "http://poincare.matf.bg.ac.rs/~kmiljan/raspored/sve/"
+base_link = "http://raspored.matf.bg.ac.rs/"
 
 
 class Course:
@@ -43,7 +43,8 @@ class Course:
 
 
 def to_latin(text):
-    return translit(text, "sr", reversed=True)
+    return text # Leave latin
+    #return translit(text, "sr", reversed=True)
 
 
 def get_course(td, weekday, time, classroom):
@@ -54,9 +55,11 @@ def get_course(td, weekday, time, classroom):
 
     course_type = "lecture"
 
-    if re.search(r"(вежбе)", text):
+    #if re.search(r"(вежбе)", text):
+    if re.search(r"(vežbe)", text):
         course_type = "exercise"
-    if re.search(r"(практикум)", text):
+    #if re.search(r"(практикум)", text):
+    if re.search(r"(praktikum)", text):
         course_type = "practicum"
 
     description = re.search(
@@ -110,18 +113,18 @@ def download_modules(courses):
     }
 
     try:
-        groups.pop("СЕМИНАР")
+        groups.pop("SEMINAR")
     except:
         print("NO SEMINAR")
 
     modules = {}
     # put groups under corresponding modules
-    modules["i"] = [to_latin(x).lower() for x in groups.keys() if "И" in x]
-    modules["m"] = [to_latin(x).lower() for x in groups.keys() if "М" in x or "О" in x]
-    modules["n"] = [to_latin(x).lower() for x in groups.keys() if "Н" in x or "О" in x]
-    modules["v"] = [to_latin(x).lower() for x in groups.keys() if "В" in x or "О" in x]
-    modules["r"] = [to_latin(x).lower() for x in groups.keys() if "Р" in x or "О" in x]
-    modules["l"] = [to_latin(x).lower() for x in groups.keys() if "Л" in x or "О" in x]
+    modules["i"] = [to_latin(x).lower() for x in groups.keys() if "I" in x]
+    modules["m"] = [to_latin(x).lower() for x in groups.keys() if "M" in x or "O" in x]
+    modules["n"] = [to_latin(x).lower() for x in groups.keys() if "N" in x or "O" in x]
+    modules["v"] = [to_latin(x).lower() for x in groups.keys() if "V" in x or "O" in x]
+    modules["r"] = [to_latin(x).lower() for x in groups.keys() if "E" in x or "O" in x]
+    modules["l"] = [to_latin(x).lower() for x in groups.keys() if "L" in x or "O" in x]
 
     # put groups under corresponding years
     for x in modules.keys():
